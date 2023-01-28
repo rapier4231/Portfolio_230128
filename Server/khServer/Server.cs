@@ -9,18 +9,33 @@ namespace khServer
 {
     class CServer
     {
+        //public enum EDataType : byte
+        //{
+        //    CreateAccount,
+        //    NoOverlapID,
+        //    Login,
+        //    RandomInt,
+        //    Chat,
+        //    Error = 16,
+        //    OverlapID,
+        //    Login_IDWrong,
+        //    Login_PWWrong,
+        //    EDataType_End
+        //}
+
         public enum EDataType : byte
         {
+            None = 0, //0x0000 0000
             CreateAccount,
             NoOverlapID,
             Login,
             RandomInt,
             Chat,
-            Error = 16,
+            Error = 16, //0x0001 0000
             OverlapID,
             Login_IDWrong,
             Login_PWWrong,
-            EDataType_End
+            EDataType_End = 255 //0x1111 1111
         }
 
         private bool m_bThreadOn = true;
