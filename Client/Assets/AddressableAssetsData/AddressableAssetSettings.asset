@@ -43,6 +43,12 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 3024e1d984240c4418986cfa476cf3ff, type: 2}
   - {fileID: 11400000, guid: f0e0e47e76334794eaf4da75c148a39e, type: 2}
+  - {fileID: 11400000, guid: 0d4fa817db7d4ea44a487a688ad5f08d, type: 2}
+  - {fileID: 11400000, guid: 546d3aebf3f63aa429e6694b6f0d4811, type: 2}
+  - {fileID: 11400000, guid: 3805a90792e391049b94157dacfe4930, type: 2}
+  - {fileID: 11400000, guid: 3a0bb098695b81a438614d68a74982c1, type: 2}
+  - {fileID: 11400000, guid: d3c5fb1605121514f86b2e366c19d36c, type: 2}
+  - {fileID: 11400000, guid: c9e1360870793f04885dc9298f17e507, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -84,6 +90,12 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Scene
+    - Loading
+    - Player
+    - Font
+    - Title
+    - InGame_Base
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 09e11389f7b03cf4c90a3433400269b3, type: 2}

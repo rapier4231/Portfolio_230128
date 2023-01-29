@@ -32,6 +32,11 @@ public class LuncherFunc : CMyUnityBase
         CreateText("DownloadSize : " + AddressableMng.Instance.fClientDownloadSize.ToString() + " / " + AddressableMng.Instance.fServerDownloadSize.ToString());
     }
 
+    public void Button_NextScene()
+    {
+        SceneMng.Instance.Set_LoadSceneAsync(ESceneType.Title);
+    }
+
     //////////////////////////////////////////////
     private void Update()
     {

@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  m_GroupName: Player
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 9c0ef79b15a787842a70b5885e155f97
+  m_SerializeEntries:
+  - m_GUID: d25ed6f900eb8be48bce992af375502a
+    m_Address: PlayerChaPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: ccae2dc6cf6f0c4479b782fedd0c8172
+    m_Address: PolyKnights_Character_Mat_Black
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: c346a9e2503cda64ba4698db6aa5e707
+    m_Address: Idle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: ab54d1b34370dbe4d896efebb96535ef
+    m_Address: Jumps
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: 111416d413a2d914c9aded619eeaf6f7
+    m_Address: Player_Knight_AniCon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: 5fad9ecdaa1678b408a01f37c5ca69e8
+    m_Address: RollForward
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: 081930da5e255e348940373200bbeaca
+    m_Address: RunForward
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: dcacd08f98af5794db5b56a6a66048e7
+    m_Address: Sprint
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: d288a0e4a2d923b46898986e979da643
+    m_Address: Characters_POLYGON_Knights
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: e842427a572cdcb439fe256d0de3e8d6
+    m_Address: Characters_Texture_Black
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  - m_GUID: 85ac2660222dae3419e6d0f461e0089b
+    m_Address: PlayerCameraPrefabs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 15314763d00d4654d899633af28c4f55, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b32782f8c8150e044841b0e4cac78857, type: 2}
+    - {fileID: 11400000, guid: 2173f5fbfa2c92441898236a8c2e15e4, type: 2}

@@ -4,6 +4,21 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/0_MyAsset/100_Luncher/6_Scene/Luncher.unity
+    guid: 695321ab1f32d724c8d54416a60b89cc
+  - enabled: 1
+    path: Assets/0_MyAsset/200_Loading/6_Scene/Loading.unity
+    guid: 7d5efa14b8469924d9b2422d77158d84
+  - enabled: 1
+    path: Assets/0_MyAsset/210_Title/6_Scene/Title.unity
+    guid: 3fefc724be7e1f24195d7359abe70d89
+  - enabled: 1
+    path: Assets/0_MyAsset/300_Base1/6_Scene/InGame_Base.unity
+    guid: fce53161f1195464988911f70e9b243a
+  - enabled: 1
+    path: Assets/0_MyAsset/311_Stage1/6_Scene/Stage1.unity
+    guid: 3838dce7e35714b4388226019e5e9c04
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: adf374cca05a4d541aa982868950a4bd, type: 2}

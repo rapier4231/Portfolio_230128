@@ -58,4 +58,9 @@ public class Login : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void Button_NextScene()
+    {
+        SceneMng.Instance.Set_LoadSceneAsync(ESceneType.InGame_Base);
+    }
+
 }
