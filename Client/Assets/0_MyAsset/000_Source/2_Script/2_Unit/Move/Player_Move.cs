@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class Player_Move : Move
 {
+    //오직 애니메이션 변경만을 위함
+    protected FSM m_FSM;
+    public FSM FSM
+    {
+        set { m_FSM = value; }
+    }
+
     //게임 스테이지가 아닌 Base에서 움직일 때 사용
-    public bool  m_NoJump = false;
+    public bool  m_TypeisNoJump = false;
 
     public float m_WalkSpeed    = 2f; //Walk에 사용되는 속도
     public float m_RunSpeed     = 3f; //Run에 사용되는 속도
@@ -15,6 +22,10 @@ public class Player_Move : Move
     private float   m_fJumpTime = 0f;
     private float   m_fJumpPosY;
     private bool    m_bJump     = false;
+    public bool bJump
+    {
+        get { return m_bJump; }
+    }
 
     //정사각형으로만 할 거고 기본 타일 사이즈는 1이라고 잡는다. 결국 MapTile Scale의 반이 해당 값.
     private float   m_fTileHalfSize;
@@ -46,7 +57,7 @@ public class Player_Move : Move
     {
         base.LateSetting();
 
-        if (!m_NoJump)
+        if (!m_TypeisNoJump)
         {
             m_fTileHalfSize = StageMng.Instance.MapTile.transform.localScale.x * 0.5f;
         }
@@ -54,7 +65,7 @@ public class Player_Move : Move
 
     private void FixedUpdate()
     {
-        if (!m_NoJump)
+        if (!m_TypeisNoJump)
         {
             Jump_FixedUpdate();
         }
@@ -62,21 +73,27 @@ public class Player_Move : Move
 
     public void Set_Move(Vector3 _v3NInputDir)
     {
-        if(m_NoJump)
+        if(m_TypeisNoJump)
         {
+            //점프 안되는 베이스 플레이어라면 항상 달리는 속도로 한다.
             MoveFunc(_v3NInputDir, m_RunSpeed);
+            m_FSM.CurrentState.Run();
         }
         else
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 MoveFunc(_v3NInputDir, m_RunSpeed);
+                m_FSM.CurrentState.Run();
             }
             else
             {
                 MoveFunc(_v3NInputDir, m_WalkSpeed);
+                m_FSM.CurrentState.Walk();
             }
         }
+
+        //걷는 상태로 변경
     }
 
     public void Setting_MainCameraPos()
@@ -87,8 +104,8 @@ public class Player_Move : Move
     //점프키를 입력했을 때 불러줄 함수
     public void Set_Jump(bool _bInput = true)
     {
-        //점프 상태면 안한다.
-        if(m_bJump)
+        //점프가 안되는 타입이거나 점프 상태면 안한다.
+        if (m_TypeisNoJump || m_bJump)
         {
             return;
         }
@@ -104,6 +121,9 @@ public class Player_Move : Move
         {
             m_fUseJumpPower = 0f;
         }
+
+        //현재 상태를 점프로 바꾼다.
+        m_FSM.CurrentState.Jump();
     }
 
     public void Jump_FixedUpdate()
@@ -129,18 +149,28 @@ public class Player_Move : Move
 
         if (fPlayerY == fHeight) //float 끼리라 ==이 되긴 힘들 수 있지만 대입 때문에 많이 탈 것 같으니 조금이라도 연산 줄여보자 
         {
-            m_bJump = false;
+            JumpFalse();
         }
         else if (fPlayerY < fHeight)
         {
             v3Pos               = transform.position;
             v3Pos.y             = fHeight;
             transform.position  = v3Pos;
-            m_bJump             = false;
+            JumpFalse();
         }
         else if(fPlayerY > fHeight && !m_bJump) //절벽에서 떨어질 때 타는 로직
         {
             Set_Jump(false);
+        }
+    }
+
+    //m_bJump를 false 시켜준다. & 상태가 점프 상태면 점프도 끝낸다.
+    private void JumpFalse()
+    {
+        if (m_bJump)
+        {
+            m_FSM.CurrentState.Idle();
+            m_bJump = false;
         }
     }
 

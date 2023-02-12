@@ -4020,6 +4020,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCameraPrefabs
       objectReference: {fileID: 0}
+    - target: {fileID: 8455021171603694807, guid: 85ac2660222dae3419e6d0f461e0089b, type: 3}
+      propertyPath: m_Animator
+      value: 
+      objectReference: {fileID: 993502478}
+    - target: {fileID: 8455021171603694807, guid: 85ac2660222dae3419e6d0f461e0089b, type: 3}
+      propertyPath: m_fWalkAniSpeed
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455021171603694807, guid: 85ac2660222dae3419e6d0f461e0089b, type: 3}
+      propertyPath: m_RotationCoroutine
+      value: 
+      objectReference: {fileID: 2030238753}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85ac2660222dae3419e6d0f461e0089b, type: 3}
 --- !u!1 &612160321
@@ -6089,6 +6101,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &993502478 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8455021171603694794, guid: 85ac2660222dae3419e6d0f461e0089b, type: 3}
+  m_PrefabInstance: {fileID: 604451301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1003719455
 GameObject:
   m_ObjectHideFlags: 0
@@ -11040,6 +11057,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024081083}
   m_Mesh: {fileID: 4300000, guid: 9ce3e781349f3044cbf501547ca613c7, type: 2}
+--- !u!1 &2030238748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8455021171594269662, guid: 85ac2660222dae3419e6d0f461e0089b, type: 3}
+  m_PrefabInstance: {fileID: 604451301}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2030238753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030238748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8101ae9cf8c6a2468d2d5cd7faae1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2041146228
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,8 +26,8 @@ public enum eStateType
 public class FSM : CMyUnityBase
 {
     public      Animator    m_Animator;     //애니메이터
-    public      float       m_fWalkAniSpeed = 0.5f;
-    public      float       m_fRunAniSpeed  =1f;
+    public      float       m_fWalkAniSpeed = 0.7f;
+    public      float       m_fRunAniSpeed  = 1f;
 
     protected   State    m_CurrentState; //현재 상태
     public      State    CurrentState
@@ -162,7 +162,6 @@ class State_Idle : State
     {
         m_FSM.eCurrentState = eState.Idle;
         m_FSM.m_Animator.CrossFade("Idle",0.2f);
-        
     }
     override public void State_Update() { }
     override public void Exit() { }
@@ -180,7 +179,6 @@ class State_Idle : State
     }
     override public void Dash()
     {
-        m_FSM.Set_ChangeState(eState.Dash);
     }
     override public void Jump() 
     {
@@ -188,11 +186,9 @@ class State_Idle : State
     }
     override public void Atk()
     {
-        m_FSM.Set_ChangeState(eState.Atk);
     }
     override public void Skill()
     {
-        m_FSM.Set_ChangeState(eState.Skill);
     }
     override public void StateEnd() { }
 
@@ -203,7 +199,8 @@ class State_Walk : State
     override public void Init() 
     {
         m_FSM.eCurrentState = eState.Walk;
-        m_FSM.m_Animator.Play("WalkAndSprint");
+        //m_FSM.m_Animator.Play("WalkAndSprint");
+        m_FSM.m_Animator.CrossFade("WalkAndSprint", 0.2f);
         m_FSM.m_Animator.SetFloat("Speed", m_FSM.m_fWalkAniSpeed);
     }
     override public void State_Update() { }
@@ -216,10 +213,12 @@ class State_Walk : State
     override public void Run() 
     {
         m_FSM.Set_ChangeState(eState.Run);
-
     }
     override public void Dash() { }
-    override public void Jump() { }
+    override public void Jump() 
+    {
+        m_FSM.Set_ChangeState(eState.Jump);
+    }
     override public void Atk() { }
     override public void Skill() { }
     override public void StateEnd() { }
@@ -230,7 +229,8 @@ class State_Run : State
     override public void Init() 
     {
         m_FSM.eCurrentState = eState.Run;
-        m_FSM.m_Animator.Play("WalkAndSprint");
+        //m_FSM.m_Animator.Play("WalkAndSprint");
+        m_FSM.m_Animator.CrossFade("WalkAndSprint", 0.2f);
         m_FSM.m_Animator.SetFloat("Speed", m_FSM.m_fRunAniSpeed);
     }
     override public void State_Update() { }
@@ -242,11 +242,13 @@ class State_Run : State
     override public void Walk() 
     {
         m_FSM.Set_ChangeState(eState.Walk);
-
     }
     override public void Run() { }
     override public void Dash() { }
-    override public void Jump() { }
+    override public void Jump() 
+    {
+        m_FSM.Set_ChangeState(eState.Jump);
+    }
     override public void Atk() { }
     override public void Skill() { }
     override public void StateEnd() { }
@@ -269,12 +271,25 @@ class State_Dash : State
 class State_Jump : State
 {
     public State_Jump(FSM _FSM) : base(_FSM) { }
-    override public void Init() { }
+    override public void Init() 
+    {
+        m_FSM.eCurrentState = eState.Jump;
+        m_FSM.m_Animator.CrossFade("Jump", 0.2f);
+    }
     override public void State_Update() { }
-    override public void Exit() { }
-    override public void Idle() { }
-    override public void Walk() { }
-    override public void Run() { }
+    override public void Exit() 
+    {
+    }
+    override public void Idle() 
+    {
+        m_FSM.Set_ChangeState(eState.Idle);
+    }
+    override public void Walk() 
+    {
+    }
+    override public void Run() 
+    {
+    }
     override public void Dash() { }
     override public void Jump() { }
     override public void Atk() { }

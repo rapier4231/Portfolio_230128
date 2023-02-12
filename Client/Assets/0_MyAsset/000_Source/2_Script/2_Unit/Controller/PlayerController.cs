@@ -6,9 +6,10 @@ using UnityEngine;
 public class PlayerController : UnitController
 {
     //인풋을 받으면 그에따라 플레이어를 이동시켜주는 클래스
-    public  Player_Move m_Player_Move;
+    public  Player_Move         m_Player_Move;
 
     private Vector3     m_v3InputDir;
+    private Vector3     m_v3PreInputDir;
     private bool        m_bMoveCC   = false;
     private bool        m_bInputCC  = false;
 
@@ -28,7 +29,9 @@ public class PlayerController : UnitController
     protected override void Setting()
     {
         base.Setting();
-        m_v3InputDir = Vector3.zero;
+        //애니메이션 상태 변경만을 위함
+        m_Player_Move.FSM   = this;
+        m_v3InputDir        = Vector3.zero;
     }
 
     private void Update()
@@ -41,11 +44,8 @@ public class PlayerController : UnitController
         if (!m_bMoveCC)
         {
             MoveFunc_Update();
-            //JumpFunc_Update(); -> 플레이어의 피직스 업뎃에서 계속 돌림.
         }
 
-        //캐릭터 바라보는 방향 잡아주기
-        ChaLookAtFunc_Update();
         //카메라 위치 잡아주기
         m_Player_Move.Setting_MainCameraPos();
     }
@@ -68,18 +68,33 @@ public class PlayerController : UnitController
         {
             //이동
             m_Player_Move.Set_Move(m_v3InputDir.normalized);
+            //캐릭터 바라보는 방향 잡아주기
+            ChaLookAtFunc_Update();
+        }
+        else
+        {
+            //방향키 인풋이 없을 경우
+            //만약 지금 점프 상태가 아니라면 아이들로 바꾼다.
+            if (eCurrentState != eState.Jump)
+            {
+                CurrentState.Idle();
+            }
         }
     }
 
-    //private void JumpFunc_Update()
-    //{
-    //    //플레이어 점프
-    //    m_Player_Move.Jump_Update();
-    //}
-
     private void ChaLookAtFunc_Update()
     {
-        //캐릭터 방향
-        transform.LookAt(transform.position + m_v3InputDir);
+        if(m_v3PreInputDir != m_v3InputDir)
+        {
+            //Vector3 v3Right = Vector3.Cross(Vector3.up, transform.forward);
+            float fAngle    = Vector3.Angle(m_v3InputDir, transform.forward);
+            float fSign     = Mathf.Sign(Vector3.Dot(m_v3InputDir, transform.right/*v3Right*/));
+            fAngle          *= fSign;
+
+            m_RotationCoroutine.Set_Rotation(fAngle);
+            m_v3PreInputDir = m_v3InputDir;
+        }
+        ////캐릭터 방향
+        //transform.LookAt(transform.position + m_v3InputDir);
     }    
 }
