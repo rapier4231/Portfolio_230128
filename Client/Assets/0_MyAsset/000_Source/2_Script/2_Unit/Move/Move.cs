@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Move : CMyUnityBase
 {
+    public float m_Speed = 2f;
+
     public CapsuleCollider  m_CapsuleCollider; //유닛 캡슐 콜라이더
 
     protected int     m_iGroundLayerMask;      //땅 충돌을 막을 레이어 마스크 저장
@@ -12,6 +14,14 @@ public class Move : CMyUnityBase
     protected Vector3 m_v3CapsuleBottomCenter; //캡슐 아래 구 센터
 
     protected float   m_fSeparationDis = 0.001f; //이격거리, 충돌 감지시 딱 붙으면 감지되어 움직일 수 없으니
+
+    //이동 제어
+    protected bool m_bMoveCC = false;
+    public virtual bool bMoveCC
+    {
+        set { m_bMoveCC = value; }
+        get { return m_bMoveCC; }
+    }
 
     protected override void NullCheck()
     {
@@ -32,7 +42,7 @@ public class Move : CMyUnityBase
         base.Setting();
         //이동시 충돌 관련하여 레이캐스트 시
         //땅은 검출되면 안되기 때문에 빼준다
-        m_iGroundLayerMask = LayerMask.GetMask("Ground");
+        m_iGroundLayerMask = LayerMask.GetMask("Ground") + LayerMask.GetMask("AtkCollider");
         m_iGroundLayerMask = ~m_iGroundLayerMask;
     }
 
@@ -52,13 +62,15 @@ public class Move : CMyUnityBase
         transform.Translate(_v3MoveDir, Space.World);
     }
 
+
     //반환값 : 이동시킬 벡터
     protected Vector3 CanMoveDis(Vector3 _v3MoveDir , float _fSpeed)
     {
         float fMoveDis;
         //붙어있는 상태에서 반대편으로 움직일 때, 충돌 판정 나기 때문에 이동 방향으로 살짝 옮겨준다.
         Vector3 v3UnitPos, v3Up;
-        fMoveDis    = Time.deltaTime * _fSpeed; //이번 픽시드 프레임 때 이동거리, 밀리거나 하면 스피드가 늘어나야 한다.
+        //이번 픽시드 프레임 때 이동거리, 밀리거나 하면 스피드가 늘어나야 한다.
+        fMoveDis = Time.deltaTime * _fSpeed; 
         v3Up        = transform.up;             //유닛 위
         v3UnitPos   = transform.position;       //바닥에 있음
         m_fCapsuleR = m_CapsuleCollider.radius;

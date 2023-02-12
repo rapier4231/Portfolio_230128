@@ -14,10 +14,12 @@ public class Player_Move : Move
     //게임 스테이지가 아닌 Base에서 움직일 때 사용
     public bool  m_TypeisNoJump = false;
 
-    public float m_WalkSpeed    = 2f; //Walk에 사용되는 속도
-    public float m_RunSpeed     = 3f; //Run에 사용되는 속도
+    //public float m_WalkSpeed    = 2f; //Walk에 사용되는 속도
+    //public float m_RunSpeed     = 3f; //Run에 사용되는 속도 배율
 
-    public  float   m_JumpPower = 4.6f;
+    public float    m_RunRatio = 1.5f; //Run에 사용되는 속도 배율
+
+    public float    m_JumpPower = 4.6f;
     private float   m_fUseJumpPower;
     private float   m_fJumpTime = 0f;
     private float   m_fJumpPosY;
@@ -76,19 +78,19 @@ public class Player_Move : Move
         if(m_TypeisNoJump)
         {
             //점프 안되는 베이스 플레이어라면 항상 달리는 속도로 한다.
-            MoveFunc(_v3NInputDir, m_RunSpeed);
+            MoveFunc(_v3NInputDir, m_Speed * m_RunRatio);
             m_FSM.CurrentState.Run();
         }
         else
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                MoveFunc(_v3NInputDir, m_RunSpeed);
+                MoveFunc(_v3NInputDir, m_Speed * m_RunRatio);
                 m_FSM.CurrentState.Run();
             }
             else
             {
-                MoveFunc(_v3NInputDir, m_WalkSpeed);
+                MoveFunc(_v3NInputDir, m_Speed);
                 m_FSM.CurrentState.Walk();
             }
         }

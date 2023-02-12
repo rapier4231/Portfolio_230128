@@ -7,6 +7,7 @@ public class CMyUnityBase : MonoBehaviour
     public enum EMyTag
     {
         GoalTile,
+        Enemy,
         EMyTag_End
     }
 
@@ -44,8 +45,13 @@ public class CMyUnityBase : MonoBehaviour
     }
     public virtual void LateInit()
     {
+        LateNullCheck();
         LateNewCreate();
         LateSetting();
+    }
+    protected virtual void LateNullCheck()
+    {
+
     }
     protected virtual void LateNewCreate()
     {

@@ -4,10 +4,10 @@ using UnityEngine;
 public class RotationCoroutine : CMyUnityBase
 {
     //회전하는데 걸리는 시간 설정
-    public  float m_RotationTime    = 0.2f;
+    public  float m_RotationTime    = 0.1f;
     private float m_fDesiredAngle   = 90f;
 
-    Coroutine m_RotCoroutine;
+    private Coroutine m_RotCoroutine;
 
     public void Set_Rotation(float _fDesiredAngle)
     {

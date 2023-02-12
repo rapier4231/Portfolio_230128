@@ -6,44 +6,70 @@ using UnityEngine;
 public class PlayerController : UnitController
 {
     //인풋을 받으면 그에따라 플레이어를 이동시켜주는 클래스
-    public  Player_Move         m_Player_Move;
+    private Player_Move m_Player_Move;
+    private Player_Atk  m_Player_Atk;
 
     private Vector3     m_v3InputDir;
     private Vector3     m_v3PreInputDir;
-    private bool        m_bMoveCC   = false;
     private bool        m_bInputCC  = false;
-
-    protected override void NullCheck()
-    {
-        base.NullCheck();
-        if(m_Player_Move == null)
-        {
-            m_Player_Move = GetComponent<Player_Move>();
-            if (m_Player_Move == null)
-            {
-                KLog.Log("플레이어에 Player_Move 스크립트가 안 붙어 있습니다.");
-            }
-        }
-    }
 
     protected override void Setting()
     {
         base.Setting();
+
+        m_Player_Move   = (Player_Move) m_Move;
+        m_Player_Atk    = (Player_Atk)  m_Atk;
+
+        m_v3InputDir = Vector3.zero;
+
         //애니메이션 상태 변경만을 위함
         m_Player_Move.FSM   = this;
-        m_v3InputDir        = Vector3.zero;
+
+        //공격력 및 애니메이션 상태 변경
+        m_Player_Atk.UnitController = this;
+    }
+
+    protected override void LateNullCheck()
+    {
+        base.LateNullCheck();
+
+        if (m_Player_Move == null)
+        {
+            m_Player_Move = GetComponent<Player_Move>();
+            if (m_Player_Move == null)
+            {
+                m_Player_Move = gameObject.AddComponent<Player_Move>();
+                KLog.Log("플레이어에 Player_Move 스크립트가 안 붙어 있습니다.");
+            }
+        }
+
+        if (m_Player_Atk == null)
+        {
+            m_Player_Atk = GetComponent<Player_Atk>();
+            if (m_Player_Atk == null)
+            {
+                m_Player_Atk = gameObject.AddComponent<Player_Atk>();
+                KLog.Log("플레이어에 Player_Atk 스크립트가 안 붙어 있습니다.");
+            }
+        }
     }
 
     private void Update()
     {
-        //상태이상에 걸리지 않았다면
-        if (!m_bInputCC)
+        //아이들 상태로 변경
+        StateChange_Idle();
+
+        //상태이상에 걸리지 않았고 공격중이 아니라면
+        if (eCurrentState != eState.Atk)
         {
-            InputFunc_Update();
-        }
-        if (!m_bMoveCC)
-        {
-            MoveFunc_Update();
+            if (!m_bInputCC)
+            {
+                InputFunc_Update();
+            }
+            if (!m_Player_Move.bMoveCC)
+            {
+                MoveFunc_Update();
+            }
         }
 
         //카메라 위치 잡아주기
@@ -60,6 +86,15 @@ public class PlayerController : UnitController
         {
             m_Player_Move.Set_Jump();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            m_Player_Atk.Set_Atk(CMyUnityBase.EMyTag.Enemy);
+            //인풋 초기화!
+            m_v3InputDir.x = 0f;
+            m_v3InputDir.y = 0f;
+            m_v3InputDir.z = 0f;
+        }
     }
 
     private void MoveFunc_Update()
@@ -71,15 +106,30 @@ public class PlayerController : UnitController
             //캐릭터 바라보는 방향 잡아주기
             ChaLookAtFunc_Update();
         }
-        else
+    }
+
+    //아이들 상태로 변경
+    private void StateChange_Idle()
+    {
+        //방향키 인풋이 있을 경우
+        if(m_v3InputDir.magnitude != 0)
         {
-            //방향키 인풋이 없을 경우
-            //만약 지금 점프 상태가 아니라면 아이들로 바꾼다.
-            if (eCurrentState != eState.Jump)
-            {
-                CurrentState.Idle();
-            }
+            return;
         }
+
+        //만약 지금 점프 상태라면
+        if (eCurrentState == eState.Jump)
+        {
+            return;
+        }
+
+        //지금 공격 상태라면
+        if (eCurrentState == eState.Atk)
+        {
+            return;
+        }
+
+        CurrentState.Idle();
     }
 
     private void ChaLookAtFunc_Update()

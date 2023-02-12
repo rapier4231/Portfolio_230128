@@ -423,6 +423,40 @@ public class MapTile : CMyUnityBase
         return false;
     }
 
+    //true를 반환하면 목적지에 도착 했다는 뜻.
+    public bool Get_NextPos(ref int _iGoalLoadIndex, Vector3 _v3Pos, float _fSpeed, Move _Move)
+    {
+        Vector3 v3GoalPos = m_LoadTileList[_iGoalLoadIndex].transform.position;
+        float fGoalDis = Vector3.Distance(v3GoalPos, _v3Pos);
+        float fDis = _fSpeed * Time.deltaTime;
+
+        Vector3 v3GoalDir;
+        //만약 가야하는 거리가 더 크다면
+        if (fGoalDis < fDis)
+        {
+            //인덱스 하나 늘려준다
+            _iGoalLoadIndex += 1;
+
+            if (_iGoalLoadIndex == m_iLoadLastTileIndex)
+            {
+                return true;
+            }
+
+            //지나는 도착 점 부터 해서 남은 거리 계산해 넣어준다.
+            fDis        -= fGoalDis;
+            v3GoalDir   = m_LoadTileList[_iGoalLoadIndex].transform.position - v3GoalPos;
+        }
+        else
+        {
+            v3GoalDir = v3GoalPos - _v3Pos;
+        }
+
+        v3GoalPos = m_LoadTileList[_iGoalLoadIndex].transform.position + (v3GoalDir.normalized * fDis);
+        v3GoalDir = v3GoalPos - _v3Pos;
+        _Move.MoveFunc(v3GoalDir.normalized, _fSpeed);
+        return false;
+    }
+
     public Vector3 Get_TilePos(int _ix, int _iy)
     {
         return m_TileArray[_ix, _iy].transform.position;
